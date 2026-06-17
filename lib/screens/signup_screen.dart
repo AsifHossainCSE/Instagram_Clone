@@ -2,7 +2,11 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:instagram_flutter/reponsive/mobile_screen_layout.dart';
+import 'package:instagram_flutter/reponsive/responsive_layout_screen.dart';
+import 'package:instagram_flutter/reponsive/web_screen_layout.dart';
 import 'package:instagram_flutter/resources/auth_methods.dart';
+import 'package:instagram_flutter/screens/login_screen.dart';
 import 'package:instagram_flutter/utilis/colors.dart';
 import 'package:instagram_flutter/utilis/utils.dart';
 import 'package:instagram_flutter/widgets/text_field_input.dart';
@@ -55,7 +59,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if (res != 'success') {
       showSnackBar(context, res);
       // handle error
+    } else {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayoutScreen(
+            mobileScreenLayout: MobileScreenLayout(),
+            webScreenLayout: WebScreenLayout(),
+          ),
+        ),
+      );
     }
+  }
+
+  void navigateToLogin() {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (context) => const LoginScreen()));
   }
 
   @override
@@ -155,19 +174,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  Container(
+                    child: const Text("Don't have an account?"),
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                  ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: navigateToLogin,
                     child: Container(
-                      child: const Text("Don't have an account?"),
+                      child: const Text(
+                        "Login",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                       padding: const EdgeInsets.symmetric(vertical: 8),
                     ),
-                  ),
-                  Container(
-                    child: const Text(
-                      "Login",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    padding: const EdgeInsets.symmetric(vertical: 8),
                   ),
                 ],
               ),
