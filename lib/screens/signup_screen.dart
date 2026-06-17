@@ -43,6 +43,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void signUpUser() async {
+    if(_image == null) return;
     setState(() {
       _isLoading = true;
     });
